@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+out.wav
+*.task
+corpus/*/
+engine/
+sample/*
+!sample/README.md
+
+# 들어보기용으로 뽑은 소리는 올리지 않는다. 받은 소리의 라이선스가 따라붙는다.
+들어보기-*.wav
+*.mp4

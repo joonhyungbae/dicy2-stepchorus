@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>걸음이 합주가 된다</title>
+<!-- 생김새는 Basecoat (MIT). 파일을 저장소에 넣어 두었으니 인터넷 없이도 뜬다 -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%231d7a74'/%3E%3C/svg%3E" />
+<link rel="stylesheet" href="/static/vendor/basecoat.min.css" />
+<link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header class="topbar">
+    <div>
+      <h1>걸음이 합주가 된다</h1>
+      <p class="sub" id="corpus-line">연결하는 중</p>
+      <p class="sub" id="listen-note"></p>
+    </div>
+    <div class="chips" id="chips"></div>
+    <button class="btn listen" id="listen" type="button" title="이 브라우저로 소리를 받아 듣는다">소리 듣기</button>
+    <button class="btn theme" id="theme" type="button" title="밝기 바꾸기">밝기</button>
+  </header>
+
+  <section class="tiles">
+    <div class="card tile"><p>지금 있는 사람</p><b id="people">0</b></div>
+    <div class="card tile"><p>울리는 소리</p><b id="voices">0</b></div>
+    <div class="card tile"><p>받은 걸음</p><b id="steps">0</b></div>
+    <div class="card tile"><p>켜 둔 시간</p><b id="uptime">0분</b></div>
+  </section>
+
+  <div class="columns">
+    <section class="card">
+      <header>
+        <h2>전시장 바닥</h2>
+        <p id="vision-note">가로가 공간의 좌우입니다</p>
+      </header>
+      <section>
+        <div class="floor" id="floor">
+          <span class="edge left">왼쪽 스피커</span>
+          <span class="edge right">오른쪽 스피커</span>
+          <span class="center-line"></span>
+        </div>
+        <div class="meter">
+          <span>소리 크기</span>
+          <div class="bar"><i id="peak"></i></div>
+          <span class="num" id="peaknum">0.00</span>
+        </div>
+      </section>
+    </section>
+
+    <section class="card" id="camera-card" hidden>
+      <header>
+        <h2>카메라가 보는 것</h2>
+        <p>초록 동그라미가 발목입니다. 걸음으로 셀 때 한 번 커집니다</p>
+      </header>
+      <section>
+        <div class="camera"><img id="camera" alt="카메라 화면" /></div>
+        <p class="hint">두 발목 중 아래쪽이 내려갔다 멈추면 걸음으로 셉니다</p>
+      </section>
+    </section>
+  </div>
+
+  <div class="columns">
+    <section class="card">
+      <header>
+        <h2>울리는 소리</h2>
+        <p>막대가 남은 길이입니다</p>
+      </header>
+      <section>
+        <ul class="voices" id="voices-list"></ul>
+      </section>
+    </section>
+
+    <section class="card">
+      <header><h2>조절</h2><p>바꾸면 바로 들립니다</p></header>
+      <section class="controls">
+        <label class="label" for="volume">소리 크기
+          <input class="input" type="range" id="volume" min="0" max="1" step="0.01" />
+          <output id="volume-v"></output>
+        </label>
+        <label class="label" for="note_seconds">음의 길이
+          <input class="input" type="range" id="note_seconds" min="1" max="12" step="0.5" />
+          <output id="note_seconds-v"></output>
+        </label>
+        <label class="label" for="fade_seconds">사라지는 시간
+          <input class="input" type="range" id="fade_seconds" min="0.5" max="10" step="0.5" />
+          <output id="fade_seconds-v"></output>
+        </label>
+        <label class="label" for="max_voices">동시에 몇 겹
+          <input class="input" type="range" id="max_voices" min="1" max="24" step="1" />
+          <output id="max_voices-v"></output>
+        </label>
+      </section>
+      <footer>
+        <button class="btn" id="toggle" type="button">소리 멈추기</button>
+        <span class="hint">값은 settings.py 에 처음 값이 적혀 있습니다</span>
+      </footer>
+    </section>
+  </div>
+
+  <section class="card">
+    <header><h2>방금 일어난 일</h2><p id="engine-note"></p></header>
+    <section>
+      <ol class="log" id="log"></ol>
+    </section>
+    <footer class="legend">
+      <span><i class="dot engine"></i>엔진이 고름</span>
+      <span><i class="dot rule"></i>규칙으로 메움</span>
+      <span><i class="dot"></i>드나듦</span>
+    </footer>
+  </section>
+
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>

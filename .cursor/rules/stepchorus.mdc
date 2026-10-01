@@ -1,0 +1,13 @@
+---
+description: dicy2-stepchorus 에서 일할 때의 규칙
+alwaysApply: true
+---
+
+이 저장소의 작업 규칙은 저장소 루트의 AGENTS.md 에 있다. 무엇을 고치기 전에 그 파일을 읽는다.
+
+- 쓰는 사람은 코딩을 해 본 적 없는 예술가다. 숫자는 stepchorus/settings.py 에만 둔다.
+- 인터넷 없이 떠야 한다. 대시보드에 CDN·외부 폰트를 넣지 않는다.
+- Dicy2 서버가 없거나 늦으면 agent.py 의 규칙이 대신 고른다. 이 대체 경로를 깨지 않는다.
+- Dicy2 는 GPL-3.0 이라 engine/ 에 따로 받아 OSC 로만 쓴다. 코드를 복사해 넣지 않는다.
+- 주석과 문서는 한국어로 쓰고, 긴 대시 대신 쉼표와 마침표로 끊는다.
+- 고친 뒤 ./start.sh --offline 10 과 --engine rule 두 경로를 모두 돌려 본다.

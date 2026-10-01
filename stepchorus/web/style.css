@@ -1,0 +1,125 @@
+/*
+ * 대시보드 배치.
+ *
+ * 색과 단추·카드 모양은 vendor/basecoat.min.css 가 맡는다. 여기서는 어디에 무엇을 놓을지와
+ * 이 작품에만 있는 것(바닥 평면도, 소리 막대, 기록)만 쓴다. 색은 전부 Basecoat 토큰을 쓴다.
+ * 그래야 밝은 화면과 어두운 화면이 저절로 맞는다.
+ */
+
+:root {
+  /* Basecoat 의 기본 강조색은 거의 검정이다. 이 작품의 색으로 바꾼다 */
+  --primary: oklch(52% 0.08 195);
+  --primary-foreground: oklch(98% 0.01 195);
+  --ring: oklch(52% 0.08 195);
+  --step-engine: oklch(62% 0.13 195);   /* 엔진이 고른 것 */
+  --step-rule: oklch(68% 0.12 75);      /* 규칙으로 메운 것 */
+  --step-floor: color-mix(in oklab, var(--primary) 7%, transparent);
+}
+.dark {
+  --primary: oklch(72% 0.09 195);
+  --primary-foreground: oklch(18% 0.02 195);
+  --ring: oklch(72% 0.09 195);
+  --step-engine: oklch(78% 0.12 195);
+  --step-rule: oklch(78% 0.11 75);
+  --step-floor: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+
+body {
+  margin: 0;
+  padding: 0 16px 48px;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Pretendard", system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+.page { max-width: 1000px; margin: 0 auto; }
+
+/* 머리 줄 */
+.topbar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px;
+  padding: 22px 0 18px;
+}
+.topbar h1 { font-size: 19px; margin: 0; letter-spacing: -0.01em; }
+.topbar .sub { margin: 2px 0 0; font-size: 13px; color: var(--muted-foreground); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.chips .badge { font-variant-numeric: tabular-nums; }
+.theme, .listen { font-size: 12px; height: 30px; padding: 0 12px; }
+.listen.on { background: var(--step-engine); border-color: var(--step-engine); }
+
+/* 숫자 네 칸 */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+.tile { padding: 14px 16px; gap: 2px; }
+.tile p { margin: 0; font-size: 12px; color: var(--muted-foreground); }
+.tile b {
+  font-size: 26px; font-weight: 500; line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 560px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+
+.columns { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 14px; }
+@media (min-width: 800px) { .columns { grid-template-columns: 1.35fr 1fr; } }
+.card > header h2 { font-size: 14px; margin: 0; }
+.card > header p { margin: 2px 0 0; font-size: 12px; color: var(--muted-foreground); }
+
+/* 전시장 바닥. 가로가 공간의 좌우다 */
+.floor {
+  position: relative; height: 160px; border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: linear-gradient(to right, var(--step-floor), transparent 18%, transparent 82%, var(--step-floor));
+}
+.floor .edge {
+  position: absolute; top: 8px; font-size: 10px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted-foreground);
+}
+.floor .edge.left { left: 10px; }
+.floor .edge.right { right: 10px; }
+.floor .center-line { position: absolute; left: 50%; top: 10px; bottom: 10px; width: 1px; background: var(--border); }
+.walker { position: absolute; transform: translateX(-50%); text-align: center; transition: left .18s linear; }
+.walker .dot { width: 13px; height: 13px; border-radius: 50%; background: var(--primary); margin: 0 auto 5px; }
+.walker .slice { font-size: 12px; font-variant-numeric: tabular-nums; }
+.walker .who { font-size: 10.5px; color: var(--muted-foreground); white-space: nowrap; }
+
+.meter { display: flex; align-items: center; gap: 10px; margin-top: 14px; font-size: 12px; color: var(--muted-foreground); }
+.meter .bar { flex: 1; height: 6px; border-radius: 999px; background: var(--muted); overflow: hidden; }
+.meter .bar i { display: block; height: 100%; width: 0; background: var(--primary); transition: width .12s linear; }
+.meter .num { font-variant-numeric: tabular-nums; }
+
+/* 카메라가 보는 것 */
+.camera { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+          background: var(--muted); aspect-ratio: 4 / 3; display: grid; place-items: center; }
+.camera img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* 울리는 소리 */
+.voices { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px;
+          max-height: 232px; overflow-y: auto; }
+.voices li { display: grid; grid-template-columns: 52px 1fr 40px; align-items: center; gap: 10px;
+             font-size: 12px; font-variant-numeric: tabular-nums; }
+.voices .bar { height: 7px; border-radius: 999px; background: var(--muted); overflow: hidden; }
+.voices .bar i { display: block; height: 100%; background: var(--primary); }
+.voices li.fading .bar i { background: var(--muted-foreground); }
+.voices .who { color: var(--muted-foreground); text-align: right; }
+.voices .quiet { color: var(--muted-foreground); }
+
+/* 조절 */
+.controls { display: flex; flex-direction: column; gap: 14px; }
+.controls label { display: grid; grid-template-columns: 92px 1fr 46px; align-items: center; gap: 12px; }
+.controls input[type=range] { width: 100%; height: auto; padding: 0; accent-color: var(--primary); }
+.controls output { font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
+.card > footer { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.hint { font-size: 12px; color: var(--muted-foreground); }
+
+/* 기록 */
+.log { list-style: none; margin: 0; padding: 0; max-height: 300px; overflow-y: auto; font-size: 12.5px; }
+.log li { display: grid; grid-template-columns: 7px 58px 1fr; gap: 10px; align-items: start;
+          padding: 5px 0; border-bottom: 1px solid var(--border); }
+.log li:last-child { border-bottom: 0; }
+.log time { color: var(--muted-foreground); font-variant-numeric: tabular-nums; }
+.dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--muted-foreground); }
+.log .dot { margin-top: 7px; }
+.log li.engine .dot { background: var(--step-engine); }
+.log li.rule .dot { background: var(--step-rule); }
+.legend { gap: 14px; font-size: 11px; color: var(--muted-foreground); }
+.legend span { display: inline-flex; align-items: center; gap: 5px; }
+.legend .dot.engine { background: var(--step-engine); }
+.legend .dot.rule { background: var(--step-rule); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
